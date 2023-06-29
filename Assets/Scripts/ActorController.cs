@@ -24,6 +24,7 @@ public class ActorController : MonoBehaviour
 
     private bool lockPlanar = false;
     private CapsuleCollider col;
+    private float lerpTarget;
 
     // Start is called before the first frame update
     void Awake()
@@ -150,18 +151,29 @@ public class ActorController : MonoBehaviour
     {
         pi.inputEnabled = false;
         //lockPlanar = true;
-        anim.SetLayerWeight(anim.GetLayerIndex("Attack"),1.0f);
+        lerpTarget = 1.0f;
     }
 
     public void OnAttack1hAUpdate()
     {
         thrustVec = model.transform.forward * anim.GetFloat("attack1hAVelocity");
+        float currentWeight = anim.GetLayerWeight(anim.GetLayerIndex("Attack"));
+        currentWeight = Mathf.Lerp(currentWeight, lerpTarget, 0.3f);
+        anim.SetLayerWeight(anim.GetLayerIndex("Attack"),currentWeight);
     }
 
-    public void OnAttackIdle()
+    public void OnAttackIdleEnter()
     {
         pi.inputEnabled = true;
         //lockPlanar = false;
-        anim.SetLayerWeight(anim.GetLayerIndex("Attack"),0);
+        //anim.SetLayerWeight(anim.GetLayerIndex("Attack"),0);
+        lerpTarget = 0f;
+    }
+
+    public void OnAttackIdleUpdate()
+    {
+        float currentWeight = anim.GetLayerWeight(anim.GetLayerIndex("Attack"));
+        currentWeight = Mathf.Lerp(currentWeight, lerpTarget, 0.3f);
+        anim.SetLayerWeight(anim.GetLayerIndex("Attack"),currentWeight);
     }
 }
