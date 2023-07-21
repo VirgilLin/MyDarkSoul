@@ -58,10 +58,10 @@
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
      <Compile Include="Assets\Scripts\FSM\FSMOnExit.cs" />
      <Compile Include="Assets\Scripts\FSM\FSMClearSignals.cs" />
-     <Compile Include="Assets\Scripts\FSM\FSMOnUpdate.cs" />
-     <Compile Include="Assets\Scripts\OnGroundSensor.cs" />
-     <Compile Include="Assets\Scripts\TriggerControl.cs" />
      <Compile Include="Assets\Scripts\RootMotionControl.cs" />
+     <Compile Include="Assets\Scripts\FSM\FSMOnUpdate.cs" />
+     <Compile Include="Assets\Scripts\TriggerControl.cs" />
+     <Compile Include="Assets\Scripts\OnGroundSensor.cs" />
  <Reference Include="UnityEngine">
  <HintPath>/Applications/Unity/Hub/Editor/2020.3.17f1c1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
