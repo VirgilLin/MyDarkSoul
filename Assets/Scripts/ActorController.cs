@@ -6,7 +6,7 @@ using UnityEngine;
 public class ActorController : MonoBehaviour
 {
     public GameObject model;
-    public PlayerInput pi;
+    public IUserInput pi;
     public float walkSpeed = 2.4f;
     public float runMultiplier = 2.5f;
     public float jumpVelocity = 3.0f;
@@ -30,7 +30,15 @@ public class ActorController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        pi = GetComponent<PlayerInput>();
+        IUserInput[] inputs = GetComponents<IUserInput>();
+        foreach (var input in inputs)
+        {
+            if (input.enabled == true)
+            {
+                pi = input;
+                break;
+            }
+        }
         anim = model.GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();

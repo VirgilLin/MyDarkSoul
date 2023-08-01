@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public PlayerInput pi;
+    public IUserInput pi;
     public float horizontalSpeed = 50.0f;
     public float verticalSpeed = 30.0f;
     public float cameraDampValue = 0.1f;
