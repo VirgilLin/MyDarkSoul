@@ -194,7 +194,7 @@ public class ActorController : MonoBehaviour
         if (CheckState("attack1C", "Attack"))
         {
             print(_deltaPos);
-            deltaPos += (Vector3)_deltaPos;
+            deltaPos += (0.2f * deltaPos + 0.8f * (Vector3)_deltaPos);
         }
 
         
