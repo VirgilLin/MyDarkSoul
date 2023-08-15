@@ -378,6 +378,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244ec1b5a00fc4e3caf3d21a633ed7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Dup: 0
+  Dright: 0
+  Dmag: 0
+  Dvec: {x: 0, y: 0, z: 0}
+  Jup: 0
+  JRight: 0
+  run: 0
+  jump: 0
+  attack: 0
+  inputEnabled: 1
   keyUp: w
   keyDown: s
   keyLeft: a
@@ -390,18 +400,6 @@ MonoBehaviour:
   keyJLeft: left
   keyJUp: up
   keyJDown: down
-  Dup: 0
-  Dright: 0
-  Dmag: 0
-  Dvec: {x: 0, y: 0, z: 0}
-  Jup: 0
-  JRight: 0
-  run: 0
-  jump: 0
-  lastJump: 0
-  attack: 0
-  lastAttack: 0
-  inputEnabled: 1
 --- !u!136 &711579722
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -870,6 +868,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 4560a76de8e824d89bb8e90dbd9a512d, type: 2}
+    - target: {fileID: 9500000, guid: 2f9d958fbcd96e44ca35a77a15e3187a, type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 2f9d958fbcd96e44ca35a77a15e3187a, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
