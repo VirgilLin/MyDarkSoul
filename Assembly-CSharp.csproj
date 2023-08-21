@@ -54,6 +54,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\FSM\FSMOnEnter.cs" />
      <Compile Include="Assets\Scripts\ActorController.cs" />
+     <Compile Include="Assets\Scripts\IUserInput.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\KeyBoardInput.cs" />
      <Compile Include="Assets\Scripts\FSM\FSMOnExit.cs" />
@@ -62,7 +63,7 @@
      <Compile Include="Assets\Scripts\FSM\FSMOnUpdate.cs" />
      <Compile Include="Assets\Scripts\TriggerControl.cs" />
      <Compile Include="Assets\Scripts\OnGroundSensor.cs" />
-     <Compile Include="Assets\Scripts\IUserInput.cs" />
+     <Compile Include="Assets\Scripts\LeftArmAnimFix.cs" />
  <Reference Include="UnityEngine">
  <HintPath>/Applications/Unity/Hub/Editor/2020.3.17f1c1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
