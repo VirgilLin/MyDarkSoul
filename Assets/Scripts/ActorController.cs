@@ -49,6 +49,8 @@ public class ActorController : MonoBehaviour
     void Update()
     {
         anim.SetFloat("forward",pi.Dmag* Mathf.Lerp(anim.GetFloat("forward"),((pi.run)?2.0f:1.0f),0.5f));
+        // 防守
+        anim.SetBool("defense",pi.defense);
         // 前滚
         if (rigid.velocity.magnitude > 0.0f)
         {

@@ -16,12 +16,13 @@ public class KeyBoardInput : IUserInput
     public string keyA; // 加速
     public string keyB; // 跳跃
     public string keyC; // 攻击
-    public string keyD;
+    public string keyD; // 防守
 
     public string keyJRight;
     public string keyJLeft;
     public string keyJUp;
     public string keyJDown;
+    
     
     // [Header("===== Output Signal =====")]
     // public float Dup;
@@ -83,6 +84,9 @@ public class KeyBoardInput : IUserInput
         
         // 跑动的输入信号
         run = Input.GetKey(keyA);
+        
+        //防守的输入信号
+        defense = Input.GetKey(keyD);
 
         // 跳跃的输入信号
         var newJump = Input.GetKey(keyB);
