@@ -25,6 +25,7 @@ public class CameraController : MonoBehaviour
         tempEulerX = 20.0f;
         model = playerHandle.GetComponent<ActorController>().model;
         camera = Camera.main.gameObject;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

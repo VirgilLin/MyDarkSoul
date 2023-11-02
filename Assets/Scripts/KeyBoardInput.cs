@@ -23,6 +23,16 @@ public class KeyBoardInput : IUserInput
     public string keyJUp;
     public string keyJDown;
     
+    //  抽象按钮
+    public MyButton keyRun = new MyButton();
+    public MyButton keyJump = new MyButton();
+    public MyButton keyAttack= new MyButton();
+    public MyButton keyDefense = new MyButton();
+
+    [Header("===== Output Signal =====")] 
+    public bool mouseEnable = false;
+    public float mouseSensitivityX = 3.0f;
+    public float mouseSensitivityY = 2.5f;
     
     // [Header("===== Output Signal =====")]
     // public float Dup;
@@ -57,10 +67,27 @@ public class KeyBoardInput : IUserInput
     // Update is called once per frame
     void Update()
     {
-        // 右边遥感控制视角方向的输入信号
-        Jup = (Input.GetKey(keyJUp) ? 1.0f : 0) - (Input.GetKey(keyJDown) ? 1.0f : 0);
-        JRight = (Input.GetKey(keyJRight) ? 1.0f : 0) - (Input.GetKey(keyJLeft) ? 1.0f : 0);
+        keyRun.Tick(Input.GetKey(keyA));
+        keyJump.Tick(Input.GetKey(keyB));
+        keyAttack.Tick(Input.GetKey(keyC));
+        keyDefense.Tick(Input.GetKey(keyD));
         
+        // 判断是否连续点击
+        print(keyAttack.isExtending && keyAttack.isPressing);
+        
+        
+        if (mouseEnable)
+        {
+            // 鼠标控制视角方向
+            Jup = Input.GetAxis("Mouse Y") * mouseSensitivityY;
+            JRight = Input.GetAxis("Mouse X") * mouseSensitivityX;
+        }
+        else
+        {
+            // 右边遥感控制视角方向的输入信号
+            Jup = (Input.GetKey(keyJUp) ? 1.0f : 0) - (Input.GetKey(keyJDown) ? 1.0f : 0);
+            JRight = (Input.GetKey(keyJRight) ? 1.0f : 0) - (Input.GetKey(keyJLeft) ? 1.0f : 0);
+        }
         // 左边遥感控制移动方向的输入信号
         targetDup = (Input.GetKey(keyUp)? 1.0f:0) - (Input.GetKey(keyDown)? 1.0f:0);
         targetDright = (Input.GetKey(keyRight)? 1.0f:0) - (Input.GetKey(keyLeft)? 1.0f:0);
@@ -83,35 +110,39 @@ public class KeyBoardInput : IUserInput
         Dvec = tempDAixs.x * transform.right + tempDAixs.y * transform.forward;
         
         // 跑动的输入信号
-        run = Input.GetKey(keyA);
+        // run = Input.GetKey(keyA);
+        run = keyRun.isPressing;
         
         //防守的输入信号
-        defense = Input.GetKey(keyD);
+        // defense = Input.GetKey(keyD);
+        defense = keyDefense.isPressing;
 
         // 跳跃的输入信号
-        var newJump = Input.GetKey(keyB);
+        // var newJump = Input.GetKey(keyB);
         // 防止长按跳跃键使jump一直为true
-        if (newJump != lastJump && newJump)
-        {
-            jump = true;
-        }
-        else
-        {
-            jump = false;
-        }
-        lastJump = newJump;
+        // if (newJump != lastJump && newJump)
+        // {
+        //     jump = true;
+        // }
+        // else
+        // {
+        //     jump = false;
+        // }
+        // lastJump = newJump;
+        jump = keyJump.onPressed;
         // 攻击的输入信号
-        var newAttack = Input.GetKey(keyC);
+        // var newAttack = Input.GetKey(keyC);
         // 防止长按攻击键使attack一直为true
-        if (newAttack != lastAttack && newAttack)
-        {
-            attack = true;
-        }
-        else
-        {
-            attack = false;
-        }
-        lastAttack = newAttack;
+        // if (newAttack != lastAttack && newAttack)
+        // {
+        //     attack = true;
+        // }
+        // else
+        // {
+        //     attack = false;
+        // }
+        // lastAttack = newAttack;
+        attack = keyAttack.onPressed;
     }
 
     // private Vector2 SquareToCircle(Vector2 input)
