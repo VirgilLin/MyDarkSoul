@@ -532,11 +532,14 @@ MonoBehaviour:
   defense: 0
   jump: 0
   attack: 0
+  roll: 0
+  lockOn: 0
   inputEnabled: 1
   keyUp: w
   keyDown: s
   keyLeft: a
   keyRight: d
+  keyLockOn: q
   keyA: left shift
   keyB: space
   keyC: mouse 0
@@ -575,6 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 142397582}
+  camCon: {fileID: 1445154450}
   pi: {fileID: 0}
   walkSpeed: 2
   runMultiplier: 2.6

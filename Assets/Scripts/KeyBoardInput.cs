@@ -11,6 +11,7 @@ public class KeyBoardInput : IUserInput
     public string keyDown = "s";
     public string keyLeft = "a";
     public string keyRight = "d";
+    public string keyLockOn = "q";
     
     
     public string keyA; // 加速
@@ -22,12 +23,13 @@ public class KeyBoardInput : IUserInput
     public string keyJLeft;
     public string keyJUp;
     public string keyJDown;
-    
+
     //  抽象按钮
     public MyButton keyRun = new MyButton();
     public MyButton keyJump = new MyButton();
     public MyButton keyAttack= new MyButton();
     public MyButton keyDefense = new MyButton();
+    public MyButton keyLockOnBtn = new MyButton();
 
     [Header("===== Output Signal =====")] 
     public bool mouseEnable = false;
@@ -71,9 +73,10 @@ public class KeyBoardInput : IUserInput
         keyJump.Tick(Input.GetKey(keyB));
         keyAttack.Tick(Input.GetKey(keyC));
         keyDefense.Tick(Input.GetKey(keyD));
+        keyLockOnBtn.Tick(Input.GetKey(keyLockOn));
         
         // 判断是否连续点击
-        print(keyAttack.isExtending && keyAttack.isPressing);
+        // print(keyAttack.isExtending && keyAttack.isPressing);
         
         
         if (mouseEnable)
@@ -111,7 +114,7 @@ public class KeyBoardInput : IUserInput
         
         // 跑动的输入信号
         // run = Input.GetKey(keyA);
-        run = keyRun.isPressing;
+        run = (keyRun.isPressing && !keyRun.isDelaying) || keyRun.isExtending;
         
         //防守的输入信号
         // defense = Input.GetKey(keyD);
@@ -130,6 +133,9 @@ public class KeyBoardInput : IUserInput
         // }
         // lastJump = newJump;
         jump = keyJump.onPressed;
+        
+        // 翻滚
+        roll = keyRun.onReleased && keyRun.isDelaying;
         // 攻击的输入信号
         // var newAttack = Input.GetKey(keyC);
         // 防止长按攻击键使attack一直为true
@@ -143,6 +149,9 @@ public class KeyBoardInput : IUserInput
         // }
         // lastAttack = newAttack;
         attack = keyAttack.onPressed;
+        
+        // 锁定
+        lockOn = keyLockOnBtn.onPressed;
     }
 
     // private Vector2 SquareToCircle(Vector2 input)

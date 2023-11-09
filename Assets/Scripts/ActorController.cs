@@ -6,6 +6,7 @@ using UnityEngine;
 public class ActorController : MonoBehaviour
 {
     public GameObject model;
+    public CameraController camCon;
     public IUserInput pi;
     public float walkSpeed = 2.4f;
     public float runMultiplier = 2.5f;
@@ -48,13 +49,22 @@ public class ActorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pi.lockOn)
+        {
+            camCon.LockUnlock();
+        }
         anim.SetFloat("forward",pi.Dmag* Mathf.Lerp(anim.GetFloat("forward"),((pi.run)?2.0f:1.0f),0.5f));
         // 防守
         anim.SetBool("defense",pi.defense);
         // 前滚
-        if (rigid.velocity.magnitude > 0.0f)
+        // if (rigid.velocity.magnitude > 0.0f)
+        // {
+        //     anim.SetTrigger("roll");
+        // }
+        if (pi.roll || rigid.velocity.magnitude > 7f)
         {
             anim.SetTrigger("roll");
+            canAttack = false;
         }
 
         if (pi.jump)
