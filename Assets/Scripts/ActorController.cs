@@ -24,6 +24,7 @@ public class ActorController : MonoBehaviour
     private bool canAttack;
 
     private bool lockPlanar = false;
+    private bool trackDirection = false;
     private CapsuleCollider col;
     private float lerpTarget;
     private Vector3 deltaPos;
@@ -53,7 +54,19 @@ public class ActorController : MonoBehaviour
         {
             camCon.LockUnlock();
         }
-        anim.SetFloat("forward",pi.Dmag* Mathf.Lerp(anim.GetFloat("forward"),((pi.run)?2.0f:1.0f),0.5f));
+
+        if (camCon.lockState == false)
+        {
+            anim.SetFloat("forward",pi.Dmag* Mathf.Lerp(anim.GetFloat("forward"),((pi.run)?2.0f:1.0f),0.5f));
+            anim.SetFloat("right",0);
+        }
+        else
+        {
+            Vector3 localDVec = transform.InverseTransformVector(pi.Dvec);
+            anim.SetFloat("forward",localDVec.z * ((pi.run)?2.0f:1.0f));
+            anim.SetFloat("right",localDVec.x * ((pi.run)?2.0f:1.0f));
+        }
+        
         // 防守
         anim.SetBool("defense",pi.defense);
         // 前滚
@@ -76,16 +89,36 @@ public class ActorController : MonoBehaviour
         {
             anim.SetTrigger("attack");
         }
-        if (pi.Dmag > 0.1f)
-        {
-            model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);
-        }
 
-        // 当跳跃动作触发时，
-        if (lockPlanar == false)
+        if (camCon.lockState == false)
         {
-            planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run)?runMultiplier:1.0f);
+            if (pi.Dmag > 0.1f)
+            {
+                model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);
+            }
+
+            // 当跳跃动作触发时，
+            if (lockPlanar == false)
+            {
+                planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run)?runMultiplier:1.0f);
+            }
         }
+        else
+        {
+            if (trackDirection == false)
+            {
+                model.transform.forward = transform.forward;
+            }
+            else
+            {
+                model.transform.forward = planarVec.normalized;
+            }
+            if (lockPlanar == false)
+            {
+                planarVec = pi.Dvec * walkSpeed * ((pi.run)?runMultiplier:1.0f);   
+            }
+        }
+        
     }
 
     private void FixedUpdate()
@@ -113,6 +146,7 @@ public class ActorController : MonoBehaviour
         pi.inputEnabled = false;
         lockPlanar = true;
         thrustVec = new Vector3(0,jumpVelocity,0);
+        trackDirection = true;
     }
     
     public void OnJumpExit()
@@ -139,6 +173,7 @@ public class ActorController : MonoBehaviour
         lockPlanar = false;
         canAttack = true;
         col.material = frictionOne;
+        trackDirection = false;
     }
     
     public void OnGroundExit()
@@ -157,6 +192,7 @@ public class ActorController : MonoBehaviour
         pi.inputEnabled = false;
         lockPlanar = true;
         thrustVec = new Vector3(0,rollVelocity,0);
+        trackDirection = true;
     }
     
     public void OnJabEnter()
